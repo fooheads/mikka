@@ -109,6 +109,16 @@ module Mikka
     end
   end
 
+  class ActorWithStash < Akka::Actor::UntypedActorWithStash
+    include RubyesqueActorCallbacks
+    include ImplicitSender
+    
+    class << self
+      alias_method :apply, :new
+      alias_method :create, :new
+    end
+  end
+
   module PropsConstructor
     def Props(&block)
       Props.create(&block)
@@ -122,6 +132,16 @@ module Mikka
     Props = ::Mikka::Props
   end
   
+  module Becoming
+    def become(behavior)
+      l = lambda { |msg| send behavior, msg }
+      context.become(l)
+    end
+    def unbecome
+      context.unbecome
+    end
+  end
+
   module SupervisionDecider
     class DeciderAdapter
       include Akka::Japi::Function

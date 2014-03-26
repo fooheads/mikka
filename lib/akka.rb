@@ -9,6 +9,7 @@ module Akka
     java_import 'akka.actor.ActorSystem'
     java_import 'akka.actor.ActorRef'
     java_import 'akka.actor.UntypedActor'
+    java_import 'akka.actor.UntypedActorWithStash'
     java_import 'akka.actor.Props'
     java_import 'akka.actor.Terminated'
     java_import 'akka.actor.AllForOneStrategy'
